@@ -18,7 +18,7 @@ const processQueue = (err, token = null) => {
 
 const clearAdminSession = () => {
   localStorage.removeItem('adminToken');
-  window.location.href = '/admin/login';
+  window.location.href = '/login';
 };
 
 api.interceptors.response.use(

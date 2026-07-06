@@ -14,7 +14,7 @@ const qc = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 3
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={qc}>
-      <BrowserRouter basename="/admin">
+      <BrowserRouter>
         <App />
         <Toaster position="top-right" />
       </BrowserRouter>

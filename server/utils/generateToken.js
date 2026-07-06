@@ -28,11 +28,17 @@ const generateResetToken = () => {
   return { token, hashed, expiry };
 };
 
+// Client and API are deployed on different domains (e.g. vercel.app / onrender.com),
+// so the refresh cookie must be SameSite=None in production or browsers drop it on
+// cross-site requests; SameSite=None requires Secure, which is already true in prod.
+const isProd = process.env.NODE_ENV === 'production';
+const crossSiteSameSite = isProd ? 'None' : 'Lax';
+
 const setRefreshCookie = (res, token) => {
   res.cookie('refreshToken', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'Strict',
+    secure: isProd,
+    sameSite: crossSiteSameSite,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };
@@ -40,15 +46,15 @@ const setRefreshCookie = (res, token) => {
 const clearRefreshCookie = (res) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'Strict',
+    secure: isProd,
+    sameSite: crossSiteSameSite,
   });
 };
 
 const cookieOpts = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'Strict',
+  secure: isProd,
+  sameSite: crossSiteSameSite,
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
@@ -56,7 +62,7 @@ const setAdminRefreshCookie = (res, token) =>
   res.cookie('adminRefreshToken', token, cookieOpts);
 
 const clearAdminRefreshCookie = (res) =>
-  res.clearCookie('adminRefreshToken', { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'Strict' });
+  res.clearCookie('adminRefreshToken', { httpOnly: true, secure: isProd, sameSite: crossSiteSameSite });
 
 module.exports = {
   generateAccessToken,

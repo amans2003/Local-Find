@@ -9,5 +9,4 @@ export default defineConfig({
       '/api': { target: 'http://localhost:5001', changeOrigin: true },
     },
   },
-  base: '/admin',
 });
