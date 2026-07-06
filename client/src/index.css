@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply font-sans text-text-mid bg-surface-white antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-dark;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-5 py-2.5 rounded-lg text-btn font-medium
+           hover:bg-primary/90 transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-outline {
+    @apply border border-primary text-primary px-5 py-2.5 rounded-lg text-btn font-medium
+           hover:bg-primary/5 transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
+  }
+  .input-field {
+    @apply w-full border border-border rounded-lg px-4 py-2.5 text-body text-text-dark
+           placeholder:text-text-muted bg-surface-white
+           focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
+           transition duration-200;
+  }
+  .card {
+    @apply bg-surface-white border border-border rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+  .badge-verified {
+    @apply inline-flex items-center gap-1 bg-success/10 text-success text-xs font-medium px-2 py-0.5 rounded-full;
+  }
+  .badge-pending {
+    @apply inline-flex items-center gap-1 bg-warning/10 text-warning text-xs font-medium px-2 py-0.5 rounded-full;
+  }
+}
+
+/* Leaflet map overrides */
+.leaflet-container {
+  @apply rounded-xl z-0;
+}
+
+/* Hero animated background */
+@keyframes heroPan {
+  0%   { transform: scale(1.08) translate(0%, 0%); }
+  25%  { transform: scale(1.08) translate(-1.5%, -1%); }
+  50%  { transform: scale(1.08) translate(-2%, 1%); }
+  75%  { transform: scale(1.08) translate(-0.5%, 1.5%); }
+  100% { transform: scale(1.08) translate(0%, 0%); }
+}
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.35; }
+  50%       { transform: translateY(-24px) scale(1.08); opacity: 0.55; }
+}
+@keyframes floatOrb2 {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.25; }
+  50%       { transform: translateY(20px) scale(0.95); opacity: 0.45; }
+}
+.hero-orb-1 { animation: floatOrb 7s ease-in-out infinite; }
+.hero-orb-2 { animation: floatOrb2 9s ease-in-out infinite; }
+.hero-orb-3 { animation: floatOrb 11s ease-in-out infinite 2s; }
+.hero-bg-pan { animation: heroPan 18s ease-in-out infinite; }
+
+/* Hide scrollbar for city strip */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
