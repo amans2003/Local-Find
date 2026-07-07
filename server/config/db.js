@@ -9,6 +9,11 @@ const connectDB = async () => {
     logger.info(`MongoDB connected: ${conn.connection.host}`);
   } catch (err) {
     logger.error(`MongoDB connection error: ${err.message}`);
+    if (err.reason && err.reason.servers) {
+      for (const [addr, desc] of err.reason.servers) {
+        logger.error(`MongoDB server ${addr}: ${desc.error ? desc.error.message || desc.error : desc.type}`);
+      }
+    }
     // Keep server running for diagnostics
   }
 };
